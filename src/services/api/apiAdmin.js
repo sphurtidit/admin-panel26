@@ -1,5 +1,7 @@
 import axios from 'axios';
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL || 'https://s26-backend.onrender.com'
+).replace(/\/$/, '');
 
 const getAllAdmins = async ({ headers }) => {
   const res = await axios.get(`${API_BASE_URL}/api/admins`, {

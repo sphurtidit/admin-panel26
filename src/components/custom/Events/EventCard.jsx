@@ -8,7 +8,9 @@ import {
 } from '@/components/ui/card';
 import React from 'react';
 import { Link } from 'react-router-dom';
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL || 'https://s26-backend.onrender.com'
+).replace(/\/$/, '');
 
 function EventCard({ data }) {
   const handleDownload = async () => {
