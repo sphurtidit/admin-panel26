@@ -1,10 +1,14 @@
 import axios from 'axios';
 
+const API_BASE_URL =
+  (import.meta.env.VITE_API_BASE_URL || 'https://s26-backend.onrender.com').replace(
+    /\/$/,
+    ''
+  );
+
 // Create an Axios instance configured for your backend
 const apiClient = axios.create({
-  // IMPORTANT: This URL assumes your backend is running on localhost port 4000.
-  // We will make this more flexible later.
-  baseURL: 'http://localhost:4000/api/admin', 
+  baseURL: `${API_BASE_URL}/api/admin`,
   headers: {
     'Content-Type': 'application/json',
   },
