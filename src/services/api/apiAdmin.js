@@ -32,14 +32,11 @@ const createAdmin = async ({ username, password, role, headers }) => {
 };
 
 const login = async ({ username, password }) => {
-  const endpoint = `${API_BASE_URL}/api/login-admin`;
-  console.log('🔐 Login attempt:', { endpoint, username });
-  const res = await axios.post(endpoint, {
+  const res = await axios.post(`${API_BASE_URL}/api/login-admin`, {
     username,
     password,
   });
 
-  console.log('✅ Login response:', { data: res.data });
   const { data, token } = res.data;
   return { data, token };
 };

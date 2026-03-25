@@ -1,18 +1,65 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import EventCaregoryFormFields from './EventCaregoryFormFields';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { createCategory } from '@/services/api/apiAdmin';
+import { createCategory, fetchEventById } from '@/services/api/apiAdmin';
 import useAuth from '@/store/useAuth';
 import { toast } from 'sonner';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+import { getAllowedCategoriesForSport } from '@/lib/sportCategoryRules';
 
 function EventCategoryForm({ eventId, setEventId }) {
   const { userAuthToken } = useAuth();
   const [disabled, setDisabled] = useState(false);
+  const [eventName, setEventName] = useState('');
+
+  const allowedCategories = useMemo(
+    () => getAllowedCategoriesForSport(eventName),
+    [eventName]
+  );
+
+  useEffect(() => {
+    const getEventDetails = async () => {
+      if (!eventId) {
+        setEventName('');
+        return;
+      }
+
+      const data = await fetchEventById({ id: eventId });
+      setEventName(data?.name || '');
+    };
+
+    getEventDetails();
+  }, [eventId]);
+
+  useEffect(() => {
+    if (!category.categoryName && allowedCategories.length) {
+      setCategory((prev) => ({
+        ...prev,
+        categoryName: allowedCategories[0],
+      }));
+    }
+  }, [allowedCategories]);
 
   const handelEventSubmit = async (event) => {
     setDisabled(true);
     event.preventDefault();
+
+    if (!allowedCategories.includes(category.categoryName)) {
+      toast('Invalid Category', {
+        description: `Only ${allowedCategories.join(' / ')} category is allowed for ${eventName || 'this sport'}.`,
+      });
+      setDisabled(false);
+      return;
+    }
+
     const eventCategoryData = {
       ...category,
       eventId,
@@ -64,12 +111,30 @@ function EventCategoryForm({ eventId, setEventId }) {
             name="eventId"
             disabled={true}
           />
-          <EventCaregoryFormFields
-            fieldname={'Category Name'}
-            value={category.categoryName}
-            handelCategory={handelCategory}
-            name="categoryName"
-          />
+          <div className="basis-3/12 flex-1">
+            <Label className="mb-2 block">Category Name</Label>
+            <Select
+              value={category.categoryName}
+              onValueChange={(value) =>
+                setCategory((prev) => ({
+                  ...prev,
+                  categoryName: value,
+                }))
+              }
+              disabled={!eventId}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                {allowedCategories.map((item) => (
+                  <SelectItem key={item} value={item}>
+                    {item}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <EventCaregoryFormFields
             fieldname={'Registration Fees'}
             value={category.registrationFees}

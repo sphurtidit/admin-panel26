@@ -38,8 +38,7 @@ function Login() {
       setLogin({ data, token });
       navigate('/');
     } catch (err) {
-      console.log('❌ Login error response:', err?.response?.data || err?.message);
-      console.log('❌ Full error object:', err);
+      console.log(err?.response?.data || err);
       if (err?.message === 'Network Error') {
         toast('Server Unreachable', {
           description:

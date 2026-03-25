@@ -19,6 +19,9 @@ import useAuth from '@/store/useAuth';
 import EventUpdateDialog from '@/components/custom/Events/EventUpdateDialog';
 import EventCategoryUpdateDialog from '@/components/custom/Events/EventCategoryUpdateDialog';
 
+const getCategoryLabel = (categoryName) =>
+  categoryName === 'Standard' ? 'Boys' : categoryName;
+
 function Event() {
   const id = useParams();
   const [eventDetails, setEventDetails] = useState({});
@@ -87,7 +90,7 @@ function Event() {
                 <Card className="flex-1" key={elm._id}>
                   <CardHeader>
                     <CardTitle className="uppercase text-2xl">
-                      {elm.categoryName}
+                      {getCategoryLabel(elm.categoryName)}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>

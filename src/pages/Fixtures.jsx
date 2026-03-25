@@ -11,6 +11,9 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
+const getCategoryLabel = (categoryName) =>
+  categoryName === 'Standard' ? 'Boys' : categoryName;
+
 function Fixtures() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,7 +49,7 @@ function Fixtures() {
                     to={`/event/${event._id}/fixtures/${category._id}`}
                   >
                     <Button variant="outline">
-                      {category.categoryName} Fixtures
+                      {getCategoryLabel(category.categoryName)} Fixtures
                     </Button>
                   </Link>
                 ))}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -11,14 +11,21 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { createSchedule } from '@/services/api/apiAdmin';
+import { createSchedule, fetchEventById } from '@/services/api/apiAdmin';
 import useAuth from '@/store/useAuth';
 import { useParams } from 'react-router-dom';
+import { toast } from 'sonner';
+import { isCategoryAllowedForSport } from '@/lib/sportCategoryRules';
 
 function ScheduleDialog({ fetchSchedule }) {
   const [isOpen, setIsOpen] = useState(false);
   const { userAuthToken } = useAuth();
-  const { eventCategoryId } = useParams();
+  const { eventCategoryId, id } = useParams();
+  const [categoryValidation, setCategoryValidation] = useState({
+    sportName: '',
+    categoryName: '',
+    allowed: true,
+  });
   const [formTextData, setFormTestData] = useState({
     order: 0,
     teamA: '',
@@ -39,8 +46,40 @@ function ScheduleDialog({ fetchSchedule }) {
     }));
   };
 
+  useEffect(() => {
+    const validateCategory = async () => {
+      if (!id || !eventCategoryId) {
+        return;
+      }
+
+      const eventData = await fetchEventById({ id });
+      const selectedCategory = eventData?.eventCategory?.find(
+        (category) => category._id === eventCategoryId
+      );
+
+      const sportName = eventData?.name || '';
+      const categoryName = selectedCategory?.categoryName || '';
+      const allowed = isCategoryAllowedForSport(sportName, categoryName);
+
+      setCategoryValidation({
+        sportName,
+        categoryName,
+        allowed,
+      });
+    };
+
+    validateCategory();
+  }, [id, eventCategoryId]);
+
   const handelFormSubmit = async (event) => {
     event.preventDefault();
+
+    if (!categoryValidation.allowed) {
+      toast('Invalid Fixture Category', {
+        description: `${categoryValidation.categoryName} fixtures are not allowed for ${categoryValidation.sportName}.`,
+      });
+      return;
+    }
 
     const finalData = {
       ...formTextData,
