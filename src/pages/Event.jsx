@@ -163,8 +163,8 @@ function Event() {
                     </div>
                   </CardContent>
                   <CardFooter className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <Link to={`schedule/${elm._id}`}>
-                      <Button className="w-full sm:w-auto">Schedule</Button>
+                    <Link to={`fixtures/${elm._id}`}>
+                      <Button className="w-full sm:w-auto">Fixtures</Button>
                     </Link>
                     <div className="flex w-full flex-wrap gap-3 sm:w-auto">
                       <Button

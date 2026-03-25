@@ -64,12 +64,12 @@ function ScheduleDialog({ fetchSchedule }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Create Schedule</Button>
+        <Button variant="outline">Create Fixture</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handelFormSubmit}>
           <DialogHeader>
-            <DialogTitle>Add a new Schedule</DialogTitle>
+            <DialogTitle>Add a new Fixture</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">

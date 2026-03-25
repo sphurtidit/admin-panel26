@@ -136,6 +136,15 @@ function EventsMenu({ role }) {
                 </SidebarMenuSubButton>
               </Link>
             </SidebarMenuSubItem>
+            <SidebarMenuSubItem>
+              <Link to="/fixtures">
+                <SidebarMenuSubButton asChild>
+                  <div className="cursor-pointer">
+                    <span>Fixtures</span>
+                  </div>
+                </SidebarMenuSubButton>
+              </Link>
+            </SidebarMenuSubItem>
           </SidebarMenuSub>
         </CollapsibleContent>
       </SidebarMenuItem>

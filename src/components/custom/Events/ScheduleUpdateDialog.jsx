@@ -62,14 +62,14 @@ function ScheduleUpdateDialog({ data, fetchSchedule }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Schedule</Button>
+        <Button variant="outline">Edit Fixture</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handelFormSubmit}>
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
+            <DialogTitle>Edit Fixture</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
+              Update fixture details and save your changes.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">

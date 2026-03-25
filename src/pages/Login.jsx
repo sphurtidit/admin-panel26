@@ -38,10 +38,18 @@ function Login() {
       setLogin({ data, token });
       navigate('/');
     } catch (err) {
-      console.log(err?.response?.data || err);
-      toast('Invalid Credentials', {
-        description: `Username or Password may be invalid`,
-      });
+      console.log('❌ Login error response:', err?.response?.data || err?.message);
+      console.log('❌ Full error object:', err);
+      if (err?.message === 'Network Error') {
+        toast('Server Unreachable', {
+          description:
+            'Unable to reach backend. Check VITE_API_BASE_URL and backend CORS origin settings.',
+        });
+      } else {
+        toast('Invalid Credentials', {
+          description: `Username or Password may be invalid`,
+        });
+      }
     } finally {
       setDisabled(false);
     }

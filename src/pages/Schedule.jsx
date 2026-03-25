@@ -75,7 +75,7 @@ function Schedule() {
             return (
               <Card key={elm._id} className="mb-3 basis-1/4 grow">
                 <CardHeader>
-                  <CardTitle>Schedule {inx + 1}</CardTitle>
+                  <CardTitle>Fixture {inx + 1}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {/* Table Start */}
@@ -139,7 +139,7 @@ function Schedule() {
                     onClick={() => handelDeleteSchedule(elm._id)}
                     disabled={disabled}
                   >
-                    Delete Schedule
+                    Delete Fixture
                   </Button>
                   <ScheduleUpdateDialog
                     data={elm}

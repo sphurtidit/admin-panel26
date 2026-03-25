@@ -1,6 +1,7 @@
 import axios from 'axios';
 const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || 'https://s26-backend.onrender.com'
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? '' : 'https://s26-backend.onrender.com')
 ).replace(/\/$/, '');
 
 const getAllAdmins = async ({ headers }) => {
@@ -31,11 +32,14 @@ const createAdmin = async ({ username, password, role, headers }) => {
 };
 
 const login = async ({ username, password }) => {
-  const res = await axios.post(`${API_BASE_URL}/api/login-admin`, {
+  const endpoint = `${API_BASE_URL}/api/login-admin`;
+  console.log('🔐 Login attempt:', { endpoint, username });
+  const res = await axios.post(endpoint, {
     username,
     password,
   });
 
+  console.log('✅ Login response:', { data: res.data });
   const { data, token } = res.data;
   return { data, token };
 };

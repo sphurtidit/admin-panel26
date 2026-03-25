@@ -9,7 +9,8 @@ import {
 import React from 'react';
 import { Link } from 'react-router-dom';
 const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || 'https://s26-backend.onrender.com'
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? '' : 'https://s26-backend.onrender.com')
 ).replace(/\/$/, '');
 
 function EventCard({ data }) {

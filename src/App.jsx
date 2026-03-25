@@ -15,6 +15,7 @@ import { Toaster } from './components/ui/sonner';
 import AutoLogin from './pages/AutoLogin';
 import Event from './pages/Event';
 import Schedule from './pages/Schedule';
+import Fixtures from './pages/Fixtures';
 
 const router = createHashRouter([
   {
@@ -48,6 +49,10 @@ const router = createHashRouter([
                 element: <AllEvents />,
               },
               {
+                path: '/fixtures',
+                element: <Fixtures />,
+              },
+              {
                 path: 'event/:id',
                 element: <Event />,
               },
@@ -57,6 +62,10 @@ const router = createHashRouter([
               },
               {
                 path: 'event/:id/schedule/:eventCategoryId',
+                element: <Schedule />,
+              },
+              {
+                path: 'event/:id/fixtures/:eventCategoryId',
                 element: <Schedule />,
               },
               {
